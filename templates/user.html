@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Login Page{% endblock %}
-
+{% block title %}User{% endblock %}
 {% block content %}
     {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -9,9 +8,5 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-<form action="#" method="POST">
-    <p>Name:</p>
-    <p><input type="text" name="name_KEY"/></p>
-    <p><input type="submit" value="Submit"/></p>
-</form>
+<p>Greetings, {{user}}</p>
 {% endblock %}
