@@ -11,15 +11,19 @@
         <h1 class="logo">Lecture Notes for B20</h1>
         <strong>
         <nav class="navigation">
-            {% if session.name %}
-            <a href="{{ url_for('home') }}">Home</a>
-            <a href="{{ url_for('notes') }}">Notes</a>
-            <a href="{{ url_for('add') }}">Add Notes</a>
-            <a href="{{ url_for('login') }}">Logout</a>
+            {% if session.user %}
+              {% if session.user_type == "instructor" %}
+              <a href="{{ url_for('home') }}">Home</a>
+              <a href="{{ url_for('notes') }}">Notes</a>
+              <a href="{{ url_for('add') }}">Add Notes</a>
+              <a href="{{ url_for('logout') }}">Logout</a>
+              {% else %}
+              <a href="{{ url_for('logout') }}">Logout</a>
+              {% endif%}
             {% else %}
             <a href="{{ url_for('register') }}">Register</a>
             <a href="{{ url_for('login') }}">Login</a>
-            <a href="{{ url_for('login') }}">Logout</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
             {% endif %}
         </nav>
         </strong>

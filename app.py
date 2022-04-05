@@ -20,10 +20,10 @@ class User(db.Model):
     username = db.Column(db.String(100), unique=True, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
-    is_instructor = db.Column(db.Boolean)
+    user_type = db.Column(db.String(100), nullable=False)
     
     def __repr__(self):
-        return f"User('{self.username}', '{self.name}', '{self.email}', '{'Instructor' if self.is_instructor else 'Student'}')"
+        return f"User('{self.username}', '{self.name}', '{self.email}', '{'Instructor' if self.user_type else 'Student'}')"
 
 @app.route('/')
 @app.route('/home')
@@ -39,12 +39,12 @@ def register():
         username = request.form['Username']
         email = request.form['Email']
         hashed_password = bcrypt.generate_password_hash(request.form['Password']).decode('utf-8')
-        is_instructor = request.form['User_Type'] == "instructor"
+        user_type = request.form['User_Type']
         reg_details = (
             username,
             email,
-            hashed_password
-            is_instructor
+            hashed_password,
+            user_type
         )
         add_users(reg_details)
         flash('Registration Successful! Please login now:')
@@ -53,22 +53,23 @@ def register():
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
     if request.method == 'GET':
-        if 'name' in session:
+        if 'user' in session:
             flash('already logged in!!')
-            return redirect(url_for('home'))
+            return redirect(url_for("home"))
         else:
-            return render_template('login.html')
+            return render_template("login.html")
     else:
         username = request.form['Username']
         password = request.form['Password']
-        person = Person.query.filter_by(username = username).first()
-        if not person or not bcrypt.check_password_hash(person.password, password):
-            flash('Please check your login details and try again', 'error')
-            return render_template('login.html')
-        else:
-            session['name'] = username
+        user = User.query.filter_by(username = username).first()
+        if user and bcrypt.check_password_hash(user.password, password):
+            session['user'] = username
+            session['user_type'] = user.user_type
             session.permanent = True
             return redirect(url_for('home'))
+        else:
+            flash('Please check your login details and try again', 'error')
+            return render_template('login.html')
 
 @app.route('/notes', methods = ['GET', 'POST'])
 def notes():
@@ -92,7 +93,8 @@ def add():
 
 @app.route('/logout')
 def logout():
-    session.pop('name', default = None)
+    session.pop('user', default = None)
+    session.pop('user_type', default = None)
     return redirect(url_for('home'))
 
 def query_notes():
@@ -106,17 +108,14 @@ def add_notes(note_details):
 
 def add_users(reg_details):
     user = User(
-        name = reg_details[0], 
-        username = reg_details[1],
-        email = reg_details[2],
-        password = reg_details[3],
-        is_instructor = reg_details[4]
+        username = reg_details[0],
+        email = reg_details[1],
+        password = reg_details[2],
+        user_type = reg_details[3]
         )
     db.session.add(user)
     db.session.commit()
 
 if __name__ == '__main__':
-    app.run(debug=True)
-
-if __name__ == '__main__':
+    db.create_all()
     app.run(debug=True)
