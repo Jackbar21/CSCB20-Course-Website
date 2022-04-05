@@ -102,7 +102,12 @@ def query_notes():
     return query_notes
 
 def add_notes(note_details):
-    note = Notes(id = note_details[0], title = note_details[1], content = note_details[2], person_id = note_details[3])
+    note = Notes(
+        id = note_details[0], 
+        title = note_details[1], 
+        content = note_details[2], 
+        person_id = note_details[3]
+        )
     db.session.add(note)
     db.session.commit()
 
