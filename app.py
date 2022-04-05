@@ -23,7 +23,7 @@ class User(db.Model):
     user_type = db.Column(db.String(100), nullable=False)
     
     def __repr__(self):
-        return f"User('{self.username}', '{self.name}', '{self.email}', '{'Instructor' if self.user_type else 'Student'}')"
+        return f"User('{self.username}', '{self.email}', '{self.user_type}')"
 
 @app.route('/')
 @app.route('/home')
