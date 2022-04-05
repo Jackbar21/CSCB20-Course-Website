@@ -2,33 +2,105 @@
 <html lang="en" dir="ltr">
  <head>
    <meta charset="utf-8">
-   <title>Lecture Notes</title>
-   <link rel="stylesheet" href="{{ url_for('static', filename='styles/template.css') }}">
+   <title>CSCB20</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='styles/template_.css') }}">
  </head>
- <body>
+
     <header>
-      <div class="container">
-        <h1 class="logo">Lecture Notes for B20</h1>
-        <strong>
-        <nav class="navigation">
-            {% if session.user %}
-            <a href="{{ url_for('home') }}">Home</a>
-            <a href="{{ url_for('notes') }}">Notes</a>
-            <a href="{{ url_for('add') }}">Add Notes</a>
-            <a href="{{ url_for('logout') }}">Logout</a>
-            {% else %}
-            <a href="{{ url_for('register') }}">Register</a>
-            <a href="{{ url_for('login') }}">Login</a>
-            <a href="{{ url_for('logout') }}">Logout</a>
-            {% endif %}
-        </nav>
-        </strong>
-      </div>
+   
+        <div class="container container-nav">
+            <div class = "title_of_the_course"> 
+             
+               <center><h1 id = "h1_">CSCB20</h1></center> 
+                <p class="info_course"> </p>
+            </div>
+          
+       
+        <nav>
+            <ul> 
+                {% if session.user %}
+               <li><a href="{{ url_for('home') }}">Home</a></li> 
+               <li>  <a href="{{ url_for('notes') }}">Notes</a> </li>
+               <li><a href="{{ url_for('add') }}">Add Notes</a></li>
+               <li>  <a href="{{ url_for('logout') }}">Logout</a></li> 
+               {% else %}
+               <li>  <a href="{{ url_for('register') }}">Register</a></li> 
+                <li> <a href="{{ url_for('login') }}">Login</a></li> 
+                  <li> <a href="{{ url_for('logout') }}">Logout</a></li> 
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  <li> </li>
+                  
+
+               {% endif %}
+            </ul>
+        </nav>            
+
+    </div>
+     
     </header>
+    
     <br>
     
     {% block content %}
     {% endblock %}
-    
+
+<body>
  </body>
+
+
+
+ <footer> 
+  
+    <div>
+     
+
+
+<center>
+      <ul class="__footer__">
+    
+          <a href="https://web.cs.toronto.edu/">
+            <div class="img_container">
+                <img src="static/Images/CSFACULTY.png" alt="CS FACULTY U OF T" class="image" style="width:100%">
+                <div class="mid_">
+                  <div class="text">Visit</div>
+                </div>
+              </div>
+       
+          </a>
+      </ul>
+
+    </div>
+
+  
+</center>
+
+
+</footer>
 </html>
