@@ -23,12 +23,26 @@ class users(db.Model):
 def home():
     return "Welcome to A3!"
 
+@app.route("/view")
+def view():
+    return render_template("view.html", values=users.query.all())
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         session.permanent = True
         user = request.form["name_KEY"]
         session["user"] = user
+
+        found_user = users.query.filter_by(name=user).first()
+        if found_user:
+            session["email"] = found_user.email
+        else:
+            usr = users(user, "")
+            db.session.add(usr)
+            db.session.commit()
+
+
         flash("Login Successful!", "info")
         return redirect(url_for("user"))
 
@@ -49,6 +63,9 @@ def user():
         if request.method == "POST":
             email = request.form["emailAddress"]
             session["email"] = email
+            found_user = users.query.filter_by().first()
+            found_user.email = email
+            db.session.commit()
             flash("Email was saved!", "info")
         else:
             if "email" in session:
