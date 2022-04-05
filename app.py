@@ -17,7 +17,6 @@ bcrypt = Bcrypt(app)
 class User(db.Model):
     __tablename__ = 'User'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
     username = db.Column(db.String(100), unique=True, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
@@ -40,10 +39,12 @@ def register():
         username = request.form['Username']
         email = request.form['Email']
         hashed_password = bcrypt.generate_password_hash(request.form['Password']).decode('utf-8')
-        reg_details =(
+        is_instructor = request.form['User_Type'] == "instructor"
+        reg_details = (
             username,
             email,
             hashed_password
+            is_instructor
         )
         add_users(reg_details)
         flash('Registration Successful! Please login now:')
@@ -104,8 +105,14 @@ def add_notes(note_details):
     db.session.commit()
 
 def add_users(reg_details):
-    person = Person(username = reg_details[0], email = reg_details[1], password = reg_details[2])
-    db.session.add(person)
+    user = User(
+        name = reg_details[0], 
+        username = reg_details[1],
+        email = reg_details[2],
+        password = reg_details[3],
+        is_instructor = reg_details[4]
+        )
+    db.session.add(user)
     db.session.commit()
 
 if __name__ == '__main__':
