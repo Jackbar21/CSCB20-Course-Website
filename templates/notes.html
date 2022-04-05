@@ -1,0 +1,31 @@
+{% extends "template.html" %}
+{% block content %}
+
+<!-- {% for Notes in query_notes_result %}
+ <p> {{ Notes }} </p>
+{% endfor %}  -->
+
+<br>
+<table class="my_table">
+    <tr>
+      <th>ID </th>
+      <th>Title</th>
+      <th>date_posted</th>
+      <th>content</th>
+      <th>person_id</th>
+    </tr>
+    {% for Notes in query_notes_result %}
+    <tr>
+      <td> {{ Notes.id }} </td>
+      <td> {{ Notes.title }} </td>
+      <td> {{ Notes.date_posted }} </td>
+      <td> {{ Notes.content }} </td>
+      <td> {{ Notes.person_id }} </td>
+    </tr>
+    {% endfor %} 
+  
+    
+  </table>
+
+{% endblock %}
+

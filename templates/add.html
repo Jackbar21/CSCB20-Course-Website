@@ -1,0 +1,18 @@
+{% extends "template.html" %}
+{% block content %}
+        <form action="http://127.0.0.1:5000/add" method = "post">
+            <label for="name">Note ID</label>
+            <input type="text" id="Note_ID" name="Note_ID">
+  
+            <label for="mail"> Title</label>
+            <input type="text" id="title" name="Title">
+
+            <label for="Content">Content</label>
+            <textarea id="text" name="Content"></textarea>
+  
+            <label for="YourId">Your ID</label>
+            <input type="number" id="yourid" name="Your_ID">
+  
+            <button type="submit">Submit</button>
+        </form>
+{% endblock %}
