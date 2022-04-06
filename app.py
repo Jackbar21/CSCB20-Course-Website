@@ -64,7 +64,7 @@ def login():
         user = User.query.filter_by(username = username).first()
         if user and bcrypt.check_password_hash(user.password, password):
             session['user'] = username
-            session['user_type'] = user.user_type
+            #session['user_type'] = user.user_type
             session.permanent = True
             return redirect(url_for('home'))
         else:
@@ -82,7 +82,7 @@ def add():
     if request.method == 'GET':
         return render_template('add.html')
     else:
-        note_details =(
+        note_details = (
             request.form['Note_ID'],
             request.form['Title'],
             request.form['Content'],
@@ -94,7 +94,7 @@ def add():
 @app.route('/logout')
 def logout():
     session.pop('user', default = None)
-    session.pop('user_type', default = None)
+    #session.pop('user_type', default = None)
     return redirect(url_for('home'))
 
 def query_notes():
