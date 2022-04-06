@@ -149,6 +149,11 @@ def add():
 def Send_Anon_Feedback():
     pagename = 'Send_Anon_Feedback'
     return render_template('Send_Anon_Feedback.html', pagename = pagename)
+""" adding app route for View Grades as a student"""
+@app.route('/View_Grades_Student')
+def View_Grades_Student():
+    pagename = 'View_Grades_Student'
+    return render_template('View_Grades_Student.html', pagename = pagename)
 
 @app.route('/logout')
 def logout():

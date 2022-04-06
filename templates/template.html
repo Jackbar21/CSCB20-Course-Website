@@ -19,7 +19,7 @@
           {% if session.user_type == "instructor" %}
             <a>Remark Requests</a>
           {% else %}
-            <a>Grades</a>
+          <a href="{{ url_for('View_Grades_Student') }}">Grades Summary</a>
             <a href="{{ url_for('Send_Anon_Feedback') }}">Send Feedback</a>
           {% endif %}
         {% else %}
