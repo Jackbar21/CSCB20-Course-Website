@@ -74,13 +74,15 @@ def register():
         email = request.form['Email']
         hashed_password = bcrypt.generate_password_hash(request.form['Password']).decode('utf-8')
         user_type = request.form['User_Type']
+
         reg_details = (
             username,
             email,
             hashed_password,
-            user_type
         )
-        add_users(reg_details)
+
+        add_student(reg_details) if user_type == "student" else add_instructor(reg_details)
+        
         flash('Registration Successful! Please login now:')
         return redirect(url_for('login'))
 
@@ -145,6 +147,7 @@ def add_notes(note_details):
     db.session.add(note)
     db.session.commit()
 
+"""
 def add_users(reg_details):
     user = User(
         username = reg_details[0],
@@ -152,7 +155,35 @@ def add_users(reg_details):
         password = reg_details[2],
         user_type = reg_details[3]
         )
+
     db.session.add(user)
+    db.session.commit()
+"""
+
+def add_student(reg_details):
+    student = Student(
+        username = reg_details[0],
+        email = reg_details[1],
+        password = reg_details[2],
+        assignment1 = -1,
+        assignment2 = -1,
+        assignment3 = -1,
+        tut_attendance = -1,
+        midterm = -1,
+        final = -1,
+        )
+
+    db.session.add(student)
+    db.session.commit()
+
+def add_instructor(reg_details):
+    instructor = Instructor(
+        username = reg_details[0],
+        email = reg_details[1],
+        password = reg_details[2]
+        )
+
+    db.session.add(instructor)
     db.session.commit()
 
 if __name__ == '__main__':

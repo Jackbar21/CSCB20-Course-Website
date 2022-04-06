@@ -1,5 +1,6 @@
 
 {% extends "template.html" %}
+{% block title %}Home Page{% endblock %}
 {% block content %}
 {% if session.user %}
   {% with messages = get_flashed_messages() %}
@@ -15,6 +16,9 @@
 
 {% else %}
   <h1>This is my {{ pagename }} page</h1>
-  <p> This web app contains the lecture notes collection for lectures 1 to 13 </p> 
+  <p> This web app contains the lecture notes collection for lectures 1 to 13 </p>
+  <p>Please select whether you'd like to Sign In or Register as a Student or Instructor here:</p>
+  <a id="student_anchor" href="{{ url_for('login') }}">Student</a>
+  <a id="instructor_anchor" href="{{ url_for('login') }}">Instructor</a>
   {% endif %}
 {% endblock %}
