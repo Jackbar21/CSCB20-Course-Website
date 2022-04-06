@@ -216,6 +216,8 @@ def add_instructor(reg_details):
 
 # print(Student.query.filter_by(username = "jackbar").first())
 
+
+
 if __name__ == '__main__':
     db.create_all()
     app.run(debug=True)

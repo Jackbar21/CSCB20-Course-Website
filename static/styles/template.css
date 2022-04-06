@@ -183,9 +183,16 @@ p{
   font-family: "VT323", monospace;
 
 }
+label{
+  font-family: "VT323", monospace;
+  font-size: 1.1rem;
+  color: rgb(191, 69, 69);
+  margin: 0;
+
+}
 h3{
   font-family: "VT323", monospace;
-  font-size: 1.25rem;
+  font-size: 1.0rem;
   color: brown;
   margin: 0;
 }

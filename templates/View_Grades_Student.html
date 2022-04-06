@@ -8,9 +8,35 @@
     {% endif %}
 {% endwith %}
 
+<h1>You can view your grades here and request a re-mark as well </h1>
 
+<form>
+    <div class = "Remark_Request_container">
+      <h3 id="h3_feedback">Please use this form to request a re-mark</h3>
+    <br> 
+    <label for="Course_Work">Please select one of the following for re-mark</label>
+    <select id="Course_Work"  name="Course_Work" required>
+       
+        <option value = "a1"> Assignment 1 </option>
+        <option value = "a2"> Assignment 2 </option>
+        <option value = "a3"> Assignment 3 </option>
+        <option value = "mid"> Midterm Exam </option>
+        <option value = "final"> Final Exam </option>
+        <option value = "attendance"> Attendance </option>
+        
+     </select>
+     
+    <textarea id="Reason" cols = "32" rows = "8" placeholder=" Why do you want a re-mark" required></textarea>
+    
+  
 
+  </div>
 
+  <button type="Submit">Submit</button>
+
+    
+  
+  </form>
 
 
 {% endblock %}
