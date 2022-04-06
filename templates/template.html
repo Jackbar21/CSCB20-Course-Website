@@ -5,36 +5,61 @@
    <title>{% block title%}{% endblock %}</title>
    <link rel="stylesheet" href="{{ url_for('static', filename='styles/template.css') }}">
  </head>
+ <header>
+  <div class="container">
+    <center><h1 class="logo">CSCB20H3 Course Website</h1></center>
+    <strong>
+      
+    <nav class="navigation">
+        {% if session.user %}
+          <a href="{{ url_for('home') }}">Home</a>
+          <a href="{{ url_for('notes') }}">Notes</a>
+          <a href="{{ url_for('add') }}">Add Notes</a>
+          <a href="{{ url_for('logout') }}">Logout</a>
+          {% if session.user_type == "instructor" %}
+            <a>Remark Requests</a>
+          {% else %}
+            <a>Grades</a>
+            <a href="{{ url_for('Send_Anon_Feedback') }}">Send Feedback</a>
+          {% endif %}
+        {% else %}
+          <a href="{{ url_for('home') }}">Home</a>
+          <a href="{{ url_for('login') }}">Login</a>
+          <a href="{{ url_for('register') }}">Register</a>
+        {% endif %}
+    </nav>
+    </strong>
+  </div>
+</header>
  <body>
-    <header>
-      <div class="container">
-        <center><h1 class="logo">CSCB20H3 Course Website</h1></center>
-        <strong>
-          
-        <nav class="navigation">
-            {% if session.user %}
-              <a href="{{ url_for('home') }}">Home</a>
-              <a href="{{ url_for('notes') }}">Notes</a>
-              <a href="{{ url_for('add') }}">Add Notes</a>
-              <a href="{{ url_for('logout') }}">Logout</a>
-              {% if session.user_type == "instructor" %}
-                <a>Remark Requests</a>
-              {% else %}
-                <a>Grades</a>
-              {% endif %}
-            {% else %}
-              <a href="{{ url_for('home') }}">Home</a>
-              <a href="{{ url_for('login') }}">Login</a>
-              <a href="{{ url_for('register') }}">Register</a>
-            {% endif %}
-        </nav>
-        </strong>
-      </div>
-    </header>
+    
     <br>
     
     {% block content %}
     {% endblock %}
     
  </body>
+
+<footer>
+ <center>
+  <ul class="__footer__">
+
+      <a href="https://web.cs.toronto.edu/">
+        <div class="img_container">
+            <img src="static/Images/CSFACULTY.png" alt="CS FACULTY U OF T" class="image" style="width:100%">
+            <div class="mid_">
+              <div class="text">Visit</div>
+            </div>
+          </div>
+   
+      </a>
+  </ul>
+
+</div>
+
+
+</center>
+
+
+</footer>
 </html>

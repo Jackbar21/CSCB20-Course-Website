@@ -144,6 +144,12 @@ def add():
         add_notes(note_details)
         return render_template('add_success.html')
 
+""" adding app route for Anon Feedback"""
+@app.route('/Send_Anon_Feedback')
+def Send_Anon_Feedback():
+    pagename = 'Send_Anon_Feedback'
+    return render_template('Send_Anon_Feedback.html', pagename = pagename)
+
 @app.route('/logout')
 def logout():
     session.pop('user', default = None)
