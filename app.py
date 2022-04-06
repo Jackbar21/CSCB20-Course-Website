@@ -148,7 +148,9 @@ def add():
 @app.route('/Send_Anon_Feedback')
 def Send_Anon_Feedback():
     pagename = 'Send_Anon_Feedback'
-    return render_template('Send_Anon_Feedback.html', pagename = pagename)
+    #new stuff
+    query_Instructor = Instructor.query.order_by(Instructor.username)
+    return render_template('Send_Anon_Feedback.html', pagename = pagename,query_Instructor=query_Instructor)
 """ adding app route for View Grades as a student"""
 @app.route('/View_Grades_Student')
 def View_Grades_Student():

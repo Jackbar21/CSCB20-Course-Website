@@ -17,10 +17,13 @@
     <textarea cols = "32" rows = "8" placeholder=" What do you recommend the instructor to do to improve their teaching?" required></textarea>
     <textarea cols = "32" rows = "8" placeholder=" What do you like about the labs?" required></textarea>
     <textarea cols = "32" rows = "8" placeholder=" What do you recommend the lab instructors to do to improve their lab teaching?" required></textarea>
-    
+    <label>Please Select an Instructor</label>
     <select id="Instructor_Name"  name="Instrcutor Name" required>
-       <option value = "placeholder"> Please Select an Instructor</option>
-    </select>
+      {%for ins in  query_Instructor%}
+       <option value ={{ins.id}} > {{ins.username}}</option>
+       {% endfor %}
+      </select>
+   
 
   </div>
 
