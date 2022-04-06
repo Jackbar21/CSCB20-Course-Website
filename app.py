@@ -8,6 +8,7 @@ from secrets import token_hex
 app = Flask(__name__)
 app.config['SECRET_KEY'] = token_hex(16) # from secrets import
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///assignment3.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes = 15)
 # CHOOSE IF WANT TO KEEP! # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
 
@@ -29,7 +30,7 @@ class Student(db.Model):
     remark = db.relationship('Remark', backref='author', lazy=True)
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}')"
+        return f"Student('{self.username}', '{self.email}')"
     
 class Instructor(db.Model):
     __tablename__ = 'Instructor'
@@ -40,7 +41,7 @@ class Instructor(db.Model):
     feedback = db.relationship('Feedback', backref='author', lazy=True)
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}')"
+        return f"Instructor('{self.username}', '{self.email}')"
 
 class Remark(db.Model):
     __tablename__ = 'Remark'
@@ -81,6 +82,16 @@ def register():
             hashed_password,
         )
 
+        # Notice bool(None) returns False and bool(<class object>) returns True
+        username_already_exists = bool(Student.query.filter_by(username = username).first()) or bool(Instructor.query.filter_by(username = username).first())
+        email_already_exists = bool(Student.query.filter_by(email = email).first()) or bool(Instructor.query.filter_by(email = email).first())
+        if username_already_exists:
+            flash('This username already exists! Please try again.', 'error')
+            return render_template('register.html')
+        elif email_already_exists:
+            flash('This email address already exists! Please try again.', 'error')
+            return render_template('register.html')
+
         add_student(reg_details) if user_type == "student" else add_instructor(reg_details)
         
         flash('Registration Successful! Please login now:')
@@ -97,10 +108,16 @@ def login():
     else:
         username = request.form['Username']
         password = request.form['Password']
-        user = User.query.filter_by(username = username).first()
+        user_type = request.form['User_Type']
+
+        if user_type == "student":
+            user = Student.query.filter_by(username = username).first()
+        else:
+            user = Instructor.query.filter_by(username = username).first()
+        
         if user and bcrypt.check_password_hash(user.password, password):
             session['user'] = username
-            #session['user_type'] = user.user_type
+            session['user_type'] = user_type
             session.permanent = True
             return redirect(url_for('home'))
         else:
@@ -130,7 +147,7 @@ def add():
 @app.route('/logout')
 def logout():
     session.pop('user', default = None)
-    #session.pop('user_type', default = None)
+    session.pop('user_type', default = None)
     return redirect(url_for('home'))
 
 def query_notes():
@@ -185,6 +202,8 @@ def add_instructor(reg_details):
 
     db.session.add(instructor)
     db.session.commit()
+
+# print(Student.query.filter_by(username = "jackbar").first())
 
 if __name__ == '__main__':
     db.create_all()

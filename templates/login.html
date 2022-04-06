@@ -13,7 +13,18 @@
   
             <label for="Password">Password</label>
             <textarea id="text" name="Password"></textarea>
+
+            <label for="User_Type">User Type</label>
+            <select id="User_Type" name="User_Type">
+                <option value="student">Student</option>
+                <option value="instructor">Instructor</option>
+            </select>
   
             <button type="Login">Login</button>
         </form>
+
+        <center>
+            <p>Don't have an account?</p> 
+            <p>Click <a href="{{ url_for('register') }}">HERE</a> to register!</p>
+        </center>
 {% endblock %}

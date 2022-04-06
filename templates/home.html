@@ -9,16 +9,17 @@
         <div>Welcome back <strong>{{ session.user }}!</strong> you are {{ message }}</div>
       {% endfor %}
     {% else %}
-      <h3> Welcome {{ session.user }} to B20 lecture notes!</h3>
-      <p> Now you can add and view lecture notes </p>
+      {% if session.user_type == "student" %}
+        <h3> Welcome {{ session.user }} to the CSCB20 Student Course Page!</h3>
+        <p> You may now check your Grades here, or submit anonymous feedback here! </p>
+      {% else %}
+        <h3> Welcome {{ session.user }} to the CSCB20 Instructor Course Page! </h3>
+      {% endif%}
     {% endif %}
   {% endwith %}
 
 {% else %}
   <h1>This is my {{ pagename }} page</h1>
   <p> This web app contains the lecture notes collection for lectures 1 to 13 </p>
-  <p>Please select whether you'd like to Sign In or Register as a Student or Instructor here:</p>
-  <a id="student_anchor" href="{{ url_for('login') }}">Student</a>
-  <a id="instructor_anchor" href="{{ url_for('login') }}">Instructor</a>
   {% endif %}
 {% endblock %}
