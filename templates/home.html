@@ -6,7 +6,7 @@
   {% with messages = get_flashed_messages() %}
     {% if messages %}
       {% for message in messages %}
-        <div>Welcome back <strong>{{ session.user }}!</strong> you are {{ message }}</div>
+        <div>Welcome back <strong>{{ session.user }}!</strong> {{ message }}</div>
       {% endfor %}
     {% else %}
       {% if session.user_type == "student" %}

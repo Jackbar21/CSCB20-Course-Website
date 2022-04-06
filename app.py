@@ -101,7 +101,7 @@ def register():
 def login():
     if request.method == 'GET':
         if 'user' in session:
-            flash('already logged in!!')
+            flash('You are already logged in!')
             return redirect(url_for("home"))
         else:
             return render_template("login.html")
