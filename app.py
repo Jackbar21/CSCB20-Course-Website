@@ -14,16 +14,50 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes = 15)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
-class User(db.Model):
-    __tablename__ = 'User'
+class Student(db.Model):
+    __tablename__ = 'Student'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
-    user_type = db.Column(db.String(100), nullable=False)
-    
+    assignment1 = db.Column(db.Float, nullable=False)
+    assignment2 = db.Column(db.Float, nullable=False)
+    assignment3 = db.Column(db.Float, nullable=False)
+    tut_attendance = db.Column(db.Float, nullable=False)
+    midterm = db.Column(db.Float, nullable=False)
+    final = db.Column(db.Float, nullable=False)
+    remark = db.relationship('Remark', backref='author', lazy=True)
+
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.user_type}')"
+        return f"User('{self.username}', '{self.email}')"
+    
+class Instructor(db.Model):
+    __tablename__ = 'Instructor'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), unique=True, nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(100), nullable=False)
+    feedback = db.relationship('Feedback', backref='author', lazy=True)
+
+    def __repr__(self):
+        return f"User('{self.username}', '{self.email}')"
+
+class Remark(db.Model):
+    __tablename__ = 'Remark'
+    id = db.Column(db.Integer, primary_key=True)
+    assessment = db.Column(db.String(100), nullable=False) # i.e. assignment1
+    reason = db.Column(db.String(2500), nullable=False)
+    status = db.Column(db.String(100), nullable=False) # Pending, Approved or Rejected
+    student_id = db.Column(db.Integer, db.ForeignKey('Student.id'), nullable=False)
+
+class Feedback(db.Model):
+    __tablename__ = 'Feedback'
+    id = db.Column(db.Integer, primary_key=True)
+    question1 = db.Column(db.String(2500), nullable=False)
+    question2 = db.Column(db.String(2500), nullable=False)
+    question3 = db.Column(db.String(2500), nullable=False)
+    question4 = db.Column(db.String(2500), nullable=False)
+    instructor_id = db.Column(db.Integer, db.ForeignKey('Instructor.id'), nullable=False)
 
 @app.route('/')
 @app.route('/home')
