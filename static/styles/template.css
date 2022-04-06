@@ -63,12 +63,20 @@ html {
     margin: 0;
 
   }
-   
+  
+  /* Forms Begin*/
   form {
+    display: flex;
+  gap: 16px;
+  flex-direction: column;
+  align-items: center;
     max-width: 480px;
     margin: 50px auto;
     padding: 16px;
     border: 1px solid #eaeaea;
+    font-family: "VT323", monospace;
+    justify-content: center;
+  background-color: whitesmoke;
   }
   
   input[type="text"],
@@ -117,19 +125,23 @@ html {
     padding: 6px;
     height: 32px;
     border-radius: 2px;
+    font-family: inherit;
   }
   
   button {
     font-size: 16px;
     font-weight: 600;
     text-transform: uppercase;
-    padding: 15px 26px;
-    color: #FFF;
-    background-color: #00b7f5;
-    border-radius: 4px;
-    border: 1px solid #00b7f5;
+    padding: 8px;
+    color: #c7c495;
+    border-bottom: 40px;
+    background-color: #304550;
+    border: 10px  whitesmoke;
+    border-radius: 24px;
+    font-size: 18px;
     text-align: center;
-    width: 100%;
+    width: 60%;
+ 
     color: brown;
   }
   
@@ -158,15 +170,24 @@ html {
    
     
   }
+  
+  /* Forms End*/
+
+
+  
+
 
 /* all basic elemnts to have same font*/
-
-
-  /* Footer Stuff*/
 
 p{
   font-family: "VT323", monospace;
 
+}
+h3{
+  font-family: "VT323", monospace;
+  font-size: 1.25rem;
+  color: brown;
+  margin: 0;
 }
 
 h1 {
@@ -181,6 +202,9 @@ h2 {
   color: brown;
   margin: 0;
 }
+/* End of the font stuff*/
+  /* Footer Stuff*/
+
 
 footer {
   display: flex;
