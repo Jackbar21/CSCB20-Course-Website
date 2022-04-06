@@ -153,7 +153,12 @@ def Send_Anon_Feedback():
 @app.route('/View_Grades_Student')
 def View_Grades_Student():
     pagename = 'View_Grades_Student'
-    return render_template('View_Grades_Student.html', pagename = pagename)
+    #new stuff
+    query_Student_result = Student.query.order_by(Student.username)
+    #new Stuff
+    return render_template('View_Grades_Student.html', pagename = pagename,query_Student_result= query_Student_result)
+
+"""Adding a query to get student detials"""
 
 @app.route('/logout')
 def logout():

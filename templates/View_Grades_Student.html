@@ -10,6 +10,28 @@
 
 <h1>You can view your grades here and request a re-mark as well </h1>
 
+<h2> Your Grades</h2>
+<br>
+{%for student in query_Student_result%}
+    {%if student.username == session.user%}
+  <center>  <h3>Username: {{student.username}}</h3> </center>
+  <center>  <h3>email: {{student.email}}</h3> </center>
+  <center>  <h3>Assignment 1: {{student.assignment1}}</h3> </center>
+  <center>  <h3>Assignment 2: {{student.assignment2}}</h3> </center>
+  <center>  <h3>Assignment 3: {{student.assignment3}}</h3> </center>
+  <center>  <h3>Attendance Mark: {{student.tut_attendance}}</h3> </center>
+  <center>  <h3> Midterm: {{student.midterm}}</h3> </center>
+  <center>  <h3> Final: {{student.final}}</h3> </center>
+  
+
+        {%endif%}
+{% endfor %}
+
+<br> 
+<br>
+
+
+
 <form>
     <div class = "Remark_Request_container">
       <h3 id="h3_feedback">Please use this form to request a re-mark</h3>
