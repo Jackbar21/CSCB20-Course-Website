@@ -160,6 +160,16 @@ def View_Grades_Student():
     #new Stuff
     return render_template('View_Grades_Student.html', pagename = pagename,query_Student_result= query_Student_result)
 
+#New route for Grades as an Instructor
+@app.route('/View_Grades_Instructor')
+def View_Grades_Instructor():
+    pagename = 'View_Grades_Instructor'
+    #new stuff
+    query_Student_result = Student.query.order_by(Student.username)
+    #new Stuff
+    return render_template('View_Grades_Instructor.html', pagename = pagename,query_Student_result= query_Student_result)
+
+
 """Adding a query to get student detials"""
 
 @app.route('/logout')

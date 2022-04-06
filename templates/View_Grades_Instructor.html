@@ -1,0 +1,39 @@
+{% extends "template.html" %}
+{% block content %}
+{% with messages = get_flashed_messages(with_categories = True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div>{{ category.upper() }} {{ message }}</div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<h3>Welcome {{session.user}}, you can view and update the grades of your students here</h3>
+<br><br>
+
+
+<center>
+    <div class="table">
+      <div class="row rowdark">
+        <div class="cell w">Username</div>
+        <div class="cell">Assignment 1 Grade</div>
+        <div class="cell">Assignment 2 Grade </div>
+        <div class="cell">Assignment 3 Grade</div>
+        <div class="cell">Midterm Grade </div>
+        <div class="cell"> Attendance Grade</div>
+        <div class="cell"> Final Grade</div>
+      </div>
+      {%for student in query_Student_result%}
+      <div class="row rowlight">
+        <div class="cell w"> {{student.username}}</div>
+        <div class="cell"> {{student.assignment1}} </div>
+        <div class="cell"> {{student.assignment1}}   </div>
+        <div class="cell">{{student.assignment1}}</div>
+        <div class="cell">{{student.midterm}}</div>
+        <div class="cell">  {{student.tut_attendance}}</div>
+        <div class="cell"> {{student.final}}</div>
+        </div>
+        {%endfor%}
+    </center>
+
+{% endblock %}
