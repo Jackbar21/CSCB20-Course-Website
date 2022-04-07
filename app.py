@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from distutils.log import error
 from flask import Flask, redirect, url_for, render_template, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
@@ -50,6 +51,7 @@ class Remark(db.Model):
     reason = db.Column(db.String(2500), nullable=False)
     status = db.Column(db.String(100), nullable=False) # Pending, Approved or Rejected
     student_id = db.Column(db.Integer, db.ForeignKey('Student.id'), nullable=False)
+  
 
 class Feedback(db.Model):
     __tablename__ = 'Feedback'
@@ -169,8 +171,35 @@ def View_Grades_Instructor():
     #new Stuff
     return render_template('View_Grades_Instructor.html', pagename = pagename,query_Student_result= query_Student_result)
 
+# adding a new route for updating grades as an instructor
 
-"""Adding a query to get student detials"""
+
+@app.route('/Update_Grades_Instructor/<int:id>',methods = ['GET', 'POST'])
+def Update_Grades_Instructor(id):
+
+    pagename = 'Update_Grades_Instructor'
+    #new stuff
+    Student_to_update = Student.query.get_or_404(id)
+    
+    if request.method == "POST":
+        Student_to_update.assignment1 = request.form['A1']
+        Student_to_update.assignment2 = request.form['A2']
+        Student_to_update.assignment3 = request.form['A3']
+        Student_to_update.tut_attendance = request.form['Att']
+        Student_to_update.midterm = request.form['Mid']
+        Student_to_update.final = request.form['Final']
+        try:
+            db.session.commit()
+            return redirect('/View_Grades_Instructor')
+        except:
+            flash('There was a problem updating the grade',"error")
+            return redirect('/View_Grades_Instructor')
+    else:
+        return render_template('Update_Grades_Instructor.html', pagename = pagename,Student_to_update=Student_to_update)
+    #new Stuff
+     
+
+
 
 @app.route('/logout')
 def logout():
@@ -230,6 +259,11 @@ def add_instructor(reg_details):
 
     db.session.add(instructor)
     db.session.commit()
+#stuff for submitting anon feedback
+"""
+
+
+"""
 
 # print(Student.query.filter_by(username = "jackbar").first())
 

@@ -46,6 +46,7 @@ html {
   @media all and (max-width: 800px) {
     .navigation {
       justify-content: space-around;
+      position: sticky;
     }
   }
 
@@ -65,6 +66,7 @@ html {
   }
   
   /* Forms Begin*/
+  
   form {
     display: flex;
   gap: 16px;

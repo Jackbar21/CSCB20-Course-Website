@@ -1,0 +1,38 @@
+{% extends "template.html" %}
+{% block content %}
+{% with messages = get_flashed_messages(with_categories = True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div>{{ category.upper() }} {{ message }}</div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<h1>Welcome to Update Grades {{session.user}} </h1>
+
+ 
+<form action="/Update_Grades_Instructor/{{Student_to_update.id}}" method = "POST" id="update_grades">
+    <label for="Name">Username</label>
+    <p>{{Student_to_update.username}}</p>
+
+    <label for="A1"> Assignement 1 Grade</label>
+    <textarea id="number" name="A1"> {{Student_to_update.assignment1}} </textarea>
+
+    <label for="A2">Assignement 2 Grade</label>
+    <textarea id="number" name="A2">{{Student_to_update.assignment2}} </textarea>
+    <label for="A3">Assignement 3 Grade</label>
+    <textarea id="number" name="A3">{{Student_to_update.assignment3}} </textarea>
+    <label for="Attendance">Attendance Grade</label>
+    <textarea id="number" name="Att"> {{Student_to_update.tut_attendance}}</textarea>
+    <label for="Midterm">Midterm Grade</label>
+    <textarea id="number" name="Mid"> {{Student_to_update.midterm}}</textarea>
+    <label for="Final">Final Grade</label>
+    <textarea id="Final" name="Final">{{Student_to_update.final}} </textarea>
+
+    
+   
+
+    <button type="register">Update</button>
+</form>
+
+{% endblock %}
