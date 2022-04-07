@@ -137,25 +137,6 @@ def login():
             flash('Please check your login details and try again', 'error')
             return render_template('login.html')
 
-@app.route('/notes', methods = ['GET', 'POST'])
-def notes():
-    if request.method == 'GET':
-        query_notes_result = query_notes()
-        return render_template('notes.html', query_notes_result = query_notes_result)
-
-@app.route('/add', methods = ['GET', 'POST'])
-def add():
-    if request.method == 'GET':
-        return render_template('add.html')
-    else:
-        note_details = (
-            request.form['Note_ID'],
-            request.form['Title'],
-            request.form['Content'],
-            request.form['Your_ID']
-        )
-        add_notes(note_details)
-        return render_template('add_success.html')
 
 """ adding app route for submitting Anon Feedback"""
 @app.route('/Send_Anon_Feedback',methods = ['GET', 'POST'])
@@ -187,16 +168,37 @@ def Send_Anon_Feedback():
 def View_Anon_Feedback():
     pagename = 'View_Anon_Feedback'
     query_Feedback_result = Feedback.query.all()
+    
     return render_template('View_Anon_Feedback.html',pagename=pagename,query_Feedback_result=query_Feedback_result)
-
+    
 """ adding app route for View Grades as a student"""
-@app.route('/View_Grades_Student')
+
+@app.route('/View_Grades_Student',methods = ['GET', 'POST'])
 def View_Grades_Student():
     pagename = 'View_Grades_Student'
     #new stuff
     query_Student_result = Student.query.order_by(Student.username)
+    remark_query_result = Remark.query.all()
     #new Stuff
-    return render_template('View_Grades_Student.html', pagename = pagename,query_Student_result= query_Student_result)
+    if request.method == 'GET':
+        return render_template('View_Grades_Student.html', pagename = pagename,query_Student_result= query_Student_result,remark_query_result=remark_query_result)
+
+    elif request.method == 'POST':
+        status = 'Pending'
+        reason = request.form['Reason']
+        assesment = request.form['Course_Work']
+        student_username = request.form['Uname']
+        remark_details = (
+            assesment,
+            reason,
+            status,
+            student_username
+        )
+
+        add_remark(remark_details)
+        flash("You have succesfully submitted the re-mark request")
+        return redirect(url_for('View_Grades_Student'))
+
 
 #New route for Grades as an Instructor
 @app.route('/View_Grades_Instructor')
@@ -234,8 +236,34 @@ def Update_Grades_Instructor(id):
         return render_template('Update_Grades_Instructor.html', pagename = pagename,Student_to_update=Student_to_update)
     #new Stuff
      
+"""Route for View_Remark_Reqs"""
+@app.route('/View_Remark_Reqs')
+def View_Remark_Reqs():
+    pagename = 'View_Remark_Reqs'
+    #new stuff
+   
+    remark_query_result = Remark.query.all()
 
+    return render_template('View_Remark_Reqs.html', pagename = pagename,remark_query_result=remark_query_result)
 
+@app.route('/Update_Remark/<int:id>',methods = ['GET', 'POST'])
+def Update_Remark(id):
+    pagename = 'Update_Remark'
+    Remark_to_update = Remark.query.get_or_404(id)
+   
+    if request.method == "POST":
+        Remark_to_update.status =request.form['Status']+':'+ 'instructor comments: '+request.form['Explanation']
+        try:
+            db.session.commit()
+            return redirect('/View_Remark_Reqs')   
+        except:
+            flash('There was a problem updating the request',"error")
+            return redirect('/View_Remark')
+    elif request.method == "GET":
+        return render_template('/Update_Remark.html',pagename=pagename,Remark_to_update=Remark_to_update)
+        
+   
+    
 
 @app.route('/logout')
 def logout():
@@ -243,32 +271,7 @@ def logout():
     session.pop('user_type', default = None)
     return redirect(url_for('home'))
 
-def query_notes():
-    query_notes = Notes.query.all()
-    return query_notes
 
-def add_notes(note_details):
-    note = Notes(
-        id = note_details[0], 
-        title = note_details[1], 
-        content = note_details[2], 
-        person_id = note_details[3]
-        )
-    db.session.add(note)
-    db.session.commit()
-
-"""
-def add_users(reg_details):
-    user = User(
-        username = reg_details[0],
-        email = reg_details[1],
-        password = reg_details[2],
-        user_type = reg_details[3]
-        )
-
-    db.session.add(user)
-    db.session.commit()
-"""
 
 def add_student(reg_details):
     student = Student(
@@ -311,7 +314,18 @@ def add_feedback(Feedback_details):
     db.session.commit()
 
 # print(Student.query.filter_by(username = "jackbar").first())
+"""New function for adding Re-Mark Requests"""
+def add_remark(Remark_details):
+    remark = Remark (
+        assessment = Remark_details[0],
+        reason = Remark_details[1],
+        status = Remark_details[2],
+        student_username = Remark_details[3]
 
+        )
+    
+    db.session.add(remark)
+    db.session.commit()
 
 
 if __name__ == '__main__':

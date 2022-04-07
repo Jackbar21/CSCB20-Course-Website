@@ -1,0 +1,28 @@
+{% extends "template.html" %}
+{% block content %}
+{% with messages = get_flashed_messages(with_categories = True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div>{{ category.upper() }} {{ message }}</div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<h1> Welcome {{session.user}}, you can accept/reject re mark requests here</h1>
+
+<form action="/Update_Remark/{{Remark_to_update.id}}" method = "POST" id="update_remark">
+    <label for="Details">Details of the request</label>
+    <h3> <strong>{{Remark_to_update.student_username}}</strong>  </h3> <h3> wants a remark for {{Remark_to_update.assessment}} because "{{Remark_to_update.reason}}"  and the current status is  {{Remark_to_update.status}}
+    </h3>
+
+    <label for="Status">Please make your decision?</label>
+    <select id="Status" name="Status">
+        <option value="Accepted">Accept</option>
+        <option value="Rejected">Reject</option>
+    <label for="Explanation">Enter the reason for your decision?</label>
+    <textarea rows = "20" id="Explanation" name="Explanation"  required> </textarea>
+    <button type="register">Update</button>
+</form>
+
+
+{% endblock %}

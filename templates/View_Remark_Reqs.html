@@ -1,0 +1,42 @@
+{% extends "template.html" %}
+{% block content %}
+{% with messages = get_flashed_messages(with_categories = True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div>{{ category.upper() }} {{ message }}</div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<center><h1>Welcome {{session.user}},you can view all the remark requests here</h1>></center>
+
+<div class="table">
+    <div class="row rowdark">
+      <div class="cell w">Student username</div>
+      <div class="cell">Assesment type</div>
+      <div class="cell">Reason </div>
+      <div class="cell">Status of the request</div>
+      <div class="cell">Click to Resolve </div>
+      
+     
+     
+    </div>
+  {%for re in remark_query_result%}
+  
+    <div class="row rowlight">
+      <div class="cell w"> {{re.student_username}}  </div>
+      <div class="cell"> {{re.assessment}} </div>
+      <div class="cell"> {{re.reason}}   </div>
+      <div class="cell">{{re.status}}</div>
+      <div class="cell"><a href="/Update_Remark/{{re.id }}"> Resolve</a></div>
+      
+     
+  
+      </div>
+   
+
+  {%endfor%}
+  
+  
+
+{% endblock %}
