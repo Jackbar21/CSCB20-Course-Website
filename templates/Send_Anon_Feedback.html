@@ -8,19 +8,22 @@
     {% endif %}
 {% endwith %}
 
-<form>
+<form action="http://127.0.0.1:5000/Send_Anon_Feedback" method = "POST">
     <div class = "Anon_Feedback_container">
       <h3 id="h3_feedback">Please use this form to provide us with feedback regarding the course anonymously</h3>
     <br> 
-   
-    <textarea cols = "32" rows = "8" placeholder=" What do you like about the instructor teaching?" required></textarea>
-    <textarea cols = "32" rows = "8" placeholder=" What do you recommend the instructor to do to improve their teaching?" required></textarea>
-    <textarea cols = "32" rows = "8" placeholder=" What do you like about the labs?" required></textarea>
-    <textarea cols = "32" rows = "8" placeholder=" What do you recommend the lab instructors to do to improve their lab teaching?" required></textarea>
+   <label>What do you like about the instructor teaching?</label>
+    <textarea name="Q1" cols = "32" rows = "8" placeholder=" What do you like about the instructor teaching?" required></textarea>
+    <label>What do you recommend the instructor to do to improve their teaching? </label>
+    <textarea name="Q2"cols = "32" rows = "8" placeholder=" What do you recommend the instructor to do to improve their teaching?" required></textarea>
+    <label> What do you like about the labs?</label>
+    <textarea name="Q3"cols = "32" rows = "8" placeholder=" What do you like about the labs?" required></textarea>
+   <label>What do you recommend the lab instructors to do to improve their lab teaching?</label>
+    <textarea name="Q4"cols = "32" rows = "8" placeholder=" What do you recommend the lab instructors to do to improve their lab teaching?" required></textarea>
     <label>Please Select an Instructor</label>
-    <select id="Instructor_Name"  name="Instrcutor Name" required>
+    <select id="Uname"  name="Uname" required>
       {%for ins in  query_Instructor%}
-       <option value ={{ins.id}} > {{ins.username}}</option>
+       <option value ={{ins.username}} > {{ins.username}}</option>
        {% endfor %}
       </select>
    
@@ -32,6 +35,6 @@
     
   
   </form>
-  <script LANGUAGE="JavaScript" src="static/JS/submit_feedback.js"></script>
+  
 
 {% endblock %}

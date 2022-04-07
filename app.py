@@ -28,7 +28,10 @@ class Student(db.Model):
     tut_attendance = db.Column(db.Float, nullable=False)
     midterm = db.Column(db.Float, nullable=False)
     final = db.Column(db.Float, nullable=False)
-    remark = db.relationship('Remark', backref='author', lazy=True)
+  
+
+
+    #remark = db.relationship('Remark', backref='author', lazy=True)
 
     def __repr__(self):
         return f"Student('{self.username}', '{self.email}')"
@@ -39,7 +42,8 @@ class Instructor(db.Model):
     username = db.Column(db.String(100), unique=True, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
-    feedback = db.relationship('Feedback', backref='author', lazy=True)
+    # commenting this for now
+   # feedback = db.relationship('Feedback', backref='author', lazy=True)
 
     def __repr__(self):
         return f"Instructor('{self.username}', '{self.email}')"
@@ -50,7 +54,10 @@ class Remark(db.Model):
     assessment = db.Column(db.String(100), nullable=False) # i.e. assignment1
     reason = db.Column(db.String(2500), nullable=False)
     status = db.Column(db.String(100), nullable=False) # Pending, Approved or Rejected
-    student_id = db.Column(db.Integer, db.ForeignKey('Student.id'), nullable=False)
+    #new thing
+    student_username = db.Column(db.String(2500), nullable=False)
+    #commenting this rn
+    #student_id = db.Column(db.Integer, db.ForeignKey('Student.id'), nullable=False)
   
 
 class Feedback(db.Model):
@@ -60,7 +67,11 @@ class Feedback(db.Model):
     question2 = db.Column(db.String(2500), nullable=False)
     question3 = db.Column(db.String(2500), nullable=False)
     question4 = db.Column(db.String(2500), nullable=False)
-    instructor_id = db.Column(db.Integer, db.ForeignKey('Instructor.id'), nullable=False)
+   #new thing
+    instructor_username = db.Column(db.String(2500), nullable=False)
+    #commenting this rn
+    
+    #instructor_id = db.Column(db.Integer, db.ForeignKey('Instructor.id'), nullable=False)
 
 @app.route('/')
 @app.route('/home')
@@ -147,12 +158,31 @@ def add():
         return render_template('add_success.html')
 
 """ adding app route for Anon Feedback"""
-@app.route('/Send_Anon_Feedback')
+@app.route('/Send_Anon_Feedback',methods = ['GET', 'POST'])
 def Send_Anon_Feedback():
     pagename = 'Send_Anon_Feedback'
     #new stuff
-    query_Instructor = Instructor.query.order_by(Instructor.username)
-    return render_template('Send_Anon_Feedback.html', pagename = pagename,query_Instructor=query_Instructor)
+    query_Instructor = Instructor.query.all()
+    if request.method == 'GET':
+        return render_template('Send_Anon_Feedback.html', pagename = pagename,query_Instructor=query_Instructor)
+    elif request.method == "POST":
+        question1 = request.form['Q1']
+        question2 = request.form['Q2']
+        question3 = request.form['Q3']
+        question4 = request.form['Q4']
+        instructor_username = request.form['Uname']
+        feedback_details = (
+            question1,
+            question2,
+            question3,
+            question4,
+            instructor_username
+            )
+        add_feedback(feedback_details)
+        flash("Feedback submitted successfully!!")
+        return render_template('Send_Anon_Feedback.html', pagename = pagename,query_Instructor=query_Instructor)
+
+
 """ adding app route for View Grades as a student"""
 @app.route('/View_Grades_Student')
 def View_Grades_Student():
@@ -260,10 +290,19 @@ def add_instructor(reg_details):
     db.session.add(instructor)
     db.session.commit()
 #stuff for submitting anon feedback
-"""
 
+def add_feedback(Feedback_details):
+    feedback = Feedback (
+        question1 = Feedback_details[0],
+        question2 = Feedback_details[1],
+        question3 = Feedback_details[2],
+        question4 = Feedback_details[3],
+        instructor_username = Feedback_details[4]
 
-"""
+        )
+    
+    db.session.add(feedback)
+    db.session.commit()
 
 # print(Student.query.filter_by(username = "jackbar").first())
 
