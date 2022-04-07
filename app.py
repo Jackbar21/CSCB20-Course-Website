@@ -157,7 +157,7 @@ def add():
         add_notes(note_details)
         return render_template('add_success.html')
 
-""" adding app route for Anon Feedback"""
+""" adding app route for submitting Anon Feedback"""
 @app.route('/Send_Anon_Feedback',methods = ['GET', 'POST'])
 def Send_Anon_Feedback():
     pagename = 'Send_Anon_Feedback'
@@ -182,6 +182,12 @@ def Send_Anon_Feedback():
         flash("Feedback submitted successfully!!")
         return render_template('Send_Anon_Feedback.html', pagename = pagename,query_Instructor=query_Instructor)
 
+"""Adding app route for viewing Anon Feedback """
+@app.route('/View_Anon_Feedback')
+def View_Anon_Feedback():
+    pagename = 'View_Anon_Feedback'
+    query_Feedback_result = Feedback.query.all()
+    return render_template('View_Anon_Feedback.html',pagename=pagename,query_Feedback_result=query_Feedback_result)
 
 """ adding app route for View Grades as a student"""
 @app.route('/View_Grades_Student')

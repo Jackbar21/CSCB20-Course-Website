@@ -1,0 +1,41 @@
+{% extends "template.html" %}
+{% block content %}
+{% with messages = get_flashed_messages(with_categories = True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div>{{ category.upper() }} {{ message }}</div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<h1>Welcome {{session.user}}, you can view all the anon feedback addressed to you</h1>
+
+
+<center>
+    <div class="table">
+        <div class="row rowdark">
+          <div class="cell w">Addressed to</div>
+          <div class="cell">What do you like about the instructor teaching?</div>
+          <div class="cell">What do you recommend the instructor to do to improve their teaching? </div>
+          <div class="cell">What do you like about the labs?</div>
+          <div class="cell">What do you recommend the lab instructors to do to improve their lab teaching? </div>
+         
+        </div>
+        {%for feed in query_Feedback_result%}
+            {%if feed.instructor_username == session.user%}
+            <div class="row rowlight">
+                <div class="cell w"> {{feed.instructor_username}}  </div>
+                <div class="cell"> {{feed.question1}} </div>
+                <div class="cell"> {{feed.question2}}   </div>
+                <div class="cell">{{feed.question3}}</div>
+                <div class="cell">{{feed.question4}}</div>
+       
+                </div>
+            
+            {%endif%}
+        {%endfor%}
+
+</center>
+
+
+{% endblock %}
