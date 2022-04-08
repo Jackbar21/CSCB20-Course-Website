@@ -286,6 +286,43 @@ def news():
     pagename = 'News'
     return render_template('news.html', pagename = pagename)
 
+@app.route('/lectures')
+def lectures():
+    pagename = 'Lectures'
+    return render_template('lectures.html', pagename = pagename)
+
+@app.route('/labs')
+def labs():
+    pagename = 'Labs'
+    return render_template('labs.html', pagename = pagename)
+
+@app.route('/assignments')
+def assignments():
+    pagename = 'Assignments'
+    return render_template('assignments.html', pagename = pagename)
+
+@app.route('/tests')
+def tests():
+    pagename = 'Tests'
+    return render_template('tests.html', pagename = pagename)
+
+@app.route('/markus')
+def markus():
+    pagename = 'Markus'
+    return render_template('markus.html', pagename = pagename)
+
+@app.route('/discussion_board')
+def discussion_board():
+    pagename = 'Discussion Board'
+    return render_template('discussion_board.html', pagename = pagename)
+
+@app.route('/resources')
+def resources():
+    pagename = 'Resources'
+    return render_template('resources.html', pagename = pagename)
+
+
+
 
 
 def add_student(reg_details):

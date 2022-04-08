@@ -24,8 +24,16 @@
            
           {% else %}
             <a href="{{ url_for('calendar') }}">Calendar</a>
+            <a href="{{ url_for('news') }}">News</a>
+            <a href="{{ url_for('lectures') }}">Lectures</a>
+            <a href="{{ url_for('labs') }}">Labs</a>
+            <a href="{{ url_for('assignments') }}">Assignments</a>
+            <a href="{{ url_for('tests') }}">Tests</a>
             <a href="{{ url_for('View_Grades_Student') }}">Grades Summary</a>
-            <a href="{{ url_for('Send_Anon_Feedback') }}">Send Feedback</a>
+            <a href="{{ url_for('markus') }}">Markus</a>
+            <a href="{{ url_for('discussion_board') }}">Discussion Board</a>
+            <a href="{{ url_for('Send_Anon_Feedback') }}">Send Anonymous Feedback</a>
+            <a href="{{ url_for('resources') }}">Resources</a>
           {% endif %}
           <a href="{{ url_for('logout') }}">Logout</a>
 
