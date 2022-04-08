@@ -1,4 +1,5 @@
 {% extends "template.html" %}
+{% block title %}Login{% endblock %}
 {% block content %}
 {% with messages = get_flashed_messages(with_categories = True) %}
     {% if messages %}
@@ -25,6 +26,6 @@
 
         <center>
             <p>Don't have an account?</p> 
-            <p>Click <a href="{{ url_for('register') }}">HERE</a> to register!</p>
+            <p>Click <a href="{{ url_for('register') }}">HERE</a> to Register!</p>
         </center>
 {% endblock %}
