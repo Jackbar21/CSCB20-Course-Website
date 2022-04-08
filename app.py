@@ -173,12 +173,14 @@ def View_Anon_Feedback():
     
 """ adding app route for View Grades as a student"""
 
-@app.route('/View_Grades_Student',methods = ['GET', 'POST'])
+@app.route('/View_Grades_Student', methods = ['GET', 'POST'])
 def View_Grades_Student():
     pagename = 'View_Grades_Student'
     #new stuff
     query_Student_result = Student.query.order_by(Student.username)
     remark_query_result = Remark.query.all()
+    remark_query_result.reverse() # This ensures the remarks are ordered from latest to earliest by request-time/date
+    
     #new Stuff
     if request.method == 'GET':
         return render_template('View_Grades_Student.html', pagename = pagename,query_Student_result= query_Student_result,remark_query_result=remark_query_result)
@@ -233,7 +235,7 @@ def Update_Grades_Instructor(id):
             flash('There was a problem updating the grade',"error")
             return redirect('/View_Grades_Instructor')
     else:
-        return render_template('Update_Grades_Instructor.html', pagename = pagename,Student_to_update=Student_to_update)
+        return render_template('Update_Grades_Instructor.html', pagename = pagename, Student_to_update=Student_to_update)
     #new Stuff
      
 """Route for View_Remark_Reqs"""
@@ -243,10 +245,11 @@ def View_Remark_Reqs():
     #new stuff
    
     remark_query_result = Remark.query.all()
+    # remark_query_result.reverse() <-- NOT REVERSING ORDER SINCE WE WANT INSTRUCTORS TO RESOLVE OLDER REQUESTS FIRST!
 
     return render_template('View_Remark_Reqs.html', pagename = pagename,remark_query_result=remark_query_result)
 
-@app.route('/Update_Remark/<int:id>',methods = ['GET', 'POST'])
+@app.route('/Update_Remark/<int:id>', methods = ['GET', 'POST'])
 def Update_Remark(id):
     pagename = 'Update_Remark'
     Remark_to_update = Remark.query.get_or_404(id)
