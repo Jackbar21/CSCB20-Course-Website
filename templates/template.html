@@ -9,7 +9,7 @@
   <div class="container">
     <center><h1 class="logo">CSCB20H3 Course Website</h1></center>
     <br> 
-    <center><h2>Welcome {{session.user}} </h2></center>
+    <!--<center><h2>Welcome {{session.user}} </h2></center>-->
     <strong>
       
     <nav class="navigation">
@@ -23,7 +23,8 @@
            
            
           {% else %}
-          <a href="{{ url_for('View_Grades_Student') }}">Grades Summary</a>
+            <a href="{{ url_for('calendar') }}">Calendar</a>
+            <a href="{{ url_for('View_Grades_Student') }}">Grades Summary</a>
             <a href="{{ url_for('Send_Anon_Feedback') }}">Send Feedback</a>
           {% endif %}
           <a href="{{ url_for('logout') }}">Logout</a>
@@ -67,5 +68,7 @@
 </center>
 
 
+
 </footer>
+<center> <p>This website was created by Varun Vikram Datta, Emin Rza and Alejandro Iglesias Llobet</p></center>
 </html>

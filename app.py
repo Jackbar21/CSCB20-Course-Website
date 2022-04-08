@@ -247,7 +247,7 @@ def View_Remark_Reqs():
     remark_query_result = Remark.query.all()
     # remark_query_result.reverse() <-- NOT REVERSING ORDER SINCE WE WANT INSTRUCTORS TO RESOLVE OLDER REQUESTS FIRST!
 
-    return render_template('View_Remark_Reqs.html', pagename = pagename,remark_query_result=remark_query_result)
+    return render_template('View_Remark_Reqs.html', pagename = pagename, remark_query_result=remark_query_result)
 
 @app.route('/Update_Remark/<int:id>', methods = ['GET', 'POST'])
 def Update_Remark(id):
@@ -265,14 +265,18 @@ def Update_Remark(id):
     elif request.method == "GET":
         return render_template('/Update_Remark.html',pagename=pagename,Remark_to_update=Remark_to_update)
         
-   
-    
 
 @app.route('/logout')
 def logout():
     session.pop('user', default = None)
     session.pop('user_type', default = None)
     return redirect(url_for('home'))
+
+
+
+@app.route('/calendar')
+def calendar():
+    return render_template('calendar.html')
 
 
 
