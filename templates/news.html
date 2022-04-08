@@ -1,4 +1,34 @@
 {% extends "template.html" %}
 {% block content %}
+<br>
+<br>   
+
+<center>
+        <h2> ANNOUNCEMENTS </h2>
+</center>
+
+<h3>Jan 7 </h3>
+<hr size="4" width="100%" color="brown">
+<p>Tutorials will begin in Week 2 <p>
+<h3>Jan 14 </h3>
+  <hr size="4" width="100%" color="brown">
+<p>Office hours added on the Calandar<p>
+<a href="{{ url_for('calendar') }}">Check the Calandar out for more detials </a>
+  <h3>Jan 26 </h3>
+  <hr size="4" width="100%" color="brown">
+<p>Term Test 1 scheduled for Feb 28 <p>
+  <h3>Feb 26 </h3>
+  <hr size="4" width="100%" color="brown">
+<p>Term Test 2 scheduled for March 28 <p>
+  <h3>March 14 </h3>
+  <hr size="4" width="100%" color="brown">
+<p>Final Exam scheduled for April 19 <p>
+  <h3>April 9 </h3>
+  <hr size="4" width="100%" color="brown">
+<p>Additional Office hours added during the exam period <p>
+<a href="{{ url_for('calendar') }}">Check the Calandar out for more detials </a>
+<h3>April 18 </h3>
+  <hr size="4" width="100%" color="brown">
+<p>Course Feedback form is out! Click <a href="{{ url_for('Send_Anon_Feedback') }}">HERE</a> to send feedback anonymously!<p>
 
 {% endblock %}
