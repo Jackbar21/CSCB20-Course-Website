@@ -14,16 +14,43 @@
 
 <center><h2> Your Grades</h2> </center>
 <br>
-{%for student in query_Student_result%}
+<div class="table">
+  <div class="row rowdark">
+    <div class="cell w">Your username</div>
+    <div class="cell">Assignment 1</div>
+    <div class="cell">Assignment 2</div>
+    <div class="cell">Assignment 3</div>
+    <div class="cell">Tutorial Attendance</div>
+    <div class="cell">Midterm</div>
+    <div class="cell">Final</div>
+
+
+</div>
+
+{% for student in query_Student_result %}
     {%if student.username == session.user%}
-  <center>  <h3>Username: {{student.username}}</h3> </center>
-  <center>  <h3>email: {{student.email}}</h3> </center>
-  <center>  <h3>Assignment 1: {{student.assignment1}}</h3> </center>
-  <center>  <h3>Assignment 2: {{student.assignment2}}</h3> </center>
-  <center>  <h3>Assignment 3: {{student.assignment3}}</h3> </center>
-  <center>  <h3>Attendance Mark: {{student.tut_attendance}}</h3> </center>
-  <center>  <h3> Midterm: {{student.midterm}}</h3> </center>
-  <center>  <h3> Final: {{student.final}}</h3> </center>
+      <div class="row rowlight">
+      <div class="cell w"> {{student.username}} </div>
+      <div class="cell"> {{student.assignment1}}%</div>
+      <div class="cell"> {{student.assignment2}} </div>
+      <div class="cell"> {{student.assignment3}} </div>
+      <div class="cell"> {{student.tut_attendance}} </div>
+      <div class="cell"> {{student.midterm}} </div>
+      <div class="cell"> {{student.final}} </div>
+      
+  
+      </div>
+      
+      <!--
+      <center>  <h3>Username: {{student.username}}</h3> </center>
+      <center>  <h3>email: {{student.email}}</h3> </center>
+      <center>  <h3>Assignment 1: {{student.assignment1}}</h3> </center>
+      <center>  <h3>Assignment 2: {{student.assignment2}}</h3> </center>
+      <center>  <h3>Assignment 3: {{student.assignment3}}</h3> </center>
+      <center>  <h3>Attendance Mark: {{student.tut_attendance}}</h3> </center>
+      <center>  <h3> Midterm: {{student.midterm}}</h3> </center>
+      <center>  <h3> Final: {{student.final}}</h3> </center>
+      -->
   
 
         {%endif%}
@@ -40,7 +67,7 @@
    
    
   </div>
-{%for re in remark_query_result%}
+{%for re in remark_query_result %}
   {%if re.student_username == session.user%}
   <div class="row rowlight">
     <div class="cell w"> {{re.student_username}}  </div>
@@ -62,16 +89,16 @@
       <h3 id="h3_feedback">Please use this form to request a re-mark</h3>
     <br> 
     <label for="Uname">Your Username(Cannot Edit(autofilled))</label>
-    <textarea id="Uname" Name ="Uname" readonly>{{session.user}}</textarea>
+    <textarea id="Uname" Name ="Uname" readonly>{{ session.user }}</textarea>
     <label for="Course_Work">Please select one of the following for re-mark</label>
     <select id="Course_Work"  name="Course_Work" required>
        
         <option value = "Assignment 1"> Assignment 1 </option>
         <option value = "Assignment 2 "> Assignment 2 </option>
         <option value = "Assignment 3"> Assignment 3 </option>
+        <option value = "Attendance"> Tutorial Attendance </option>
         <option value = "Midterm Exam"> Midterm Exam </option>
         <option value = "Final Exam"> Final Exam </option>
-        <option value = "Attendance"> Attendance </option>
         
      </select>
      
