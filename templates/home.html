@@ -1,6 +1,5 @@
 
 {% extends "template.html" %}
-{% block title %}Home{% endblock %}
 {% block content %}
 {% if session.user %}
   {% with messages = get_flashed_messages() %}

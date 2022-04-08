@@ -76,13 +76,14 @@ class Feedback(db.Model):
 @app.route('/')
 @app.route('/home')
 def home():
-    pagename = 'home'
+    pagename = 'Home'
     return render_template('home.html', pagename = pagename)
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
+    pagename = 'Register'
     if request.method == 'GET':
-        return render_template('register.html')
+        return render_template('register.html', pagename = pagename)
     else:
         username = request.form['Username']
         email = request.form['Email']
@@ -100,10 +101,10 @@ def register():
         email_already_exists = bool(Student.query.filter_by(email = email).first()) or bool(Instructor.query.filter_by(email = email).first())
         if username_already_exists:
             flash('This username already exists! Please try again.', 'error')
-            return render_template('register.html')
+            return render_template('register.html', pagename = pagename)
         elif email_already_exists:
             flash('This email address already exists! Please try again.', 'error')
-            return render_template('register.html')
+            return render_template('register.html', pagename = pagename)
 
         add_student(reg_details) if user_type == "student" else add_instructor(reg_details)
         
@@ -112,12 +113,13 @@ def register():
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
+    pagename = 'Login'
     if request.method == 'GET':
         if 'user' in session:
             flash('You are already logged in!')
             return redirect(url_for("home"))
         else:
-            return render_template("login.html")
+            return render_template("login.html", pagename = pagename)
     else:
         username = request.form['Username']
         password = request.form['Password']
@@ -135,13 +137,13 @@ def login():
             return redirect(url_for('home'))
         else:
             flash('Please check your login details and try again', 'error')
-            return render_template('login.html')
+            return render_template('login.html', pagename = pagename)
 
 
 """ adding app route for submitting Anon Feedback"""
 @app.route('/Send_Anon_Feedback',methods = ['GET', 'POST'])
 def Send_Anon_Feedback():
-    pagename = 'Send_Anon_Feedback'
+    pagename = 'Send Anonymous Feedback'
     #new stuff
     query_Instructor = Instructor.query.all()
     if request.method == 'GET':
@@ -166,7 +168,7 @@ def Send_Anon_Feedback():
 """Adding app route for viewing Anon Feedback """
 @app.route('/View_Anon_Feedback')
 def View_Anon_Feedback():
-    pagename = 'View_Anon_Feedback'
+    pagename = 'View Anonymous Feedback'
     query_Feedback_result = Feedback.query.all()
     
     return render_template('View_Anon_Feedback.html',pagename=pagename,query_Feedback_result=query_Feedback_result)
@@ -175,7 +177,7 @@ def View_Anon_Feedback():
 
 @app.route('/View_Grades_Student', methods = ['GET', 'POST'])
 def View_Grades_Student():
-    pagename = 'View_Grades_Student'
+    pagename = 'View Grades'
     #new stuff
     query_Student_result = Student.query.order_by(Student.username)
     remark_query_result = Remark.query.all()
@@ -205,7 +207,7 @@ def View_Grades_Student():
 #New route for Grades as an Instructor
 @app.route('/View_Grades_Instructor')
 def View_Grades_Instructor():
-    pagename = 'View_Grades_Instructor'
+    pagename = 'View Student Grades'
     #new stuff
     query_Student_result = Student.query.order_by(Student.username)
     #new Stuff
@@ -217,7 +219,7 @@ def View_Grades_Instructor():
 @app.route('/Update_Grades_Instructor/<int:id>',methods = ['GET', 'POST'])
 def Update_Grades_Instructor(id):
 
-    pagename = 'Update_Grades_Instructor'
+    pagename = 'Update Grades'
     #new stuff
     Student_to_update = Student.query.get_or_404(id)
     
@@ -241,7 +243,7 @@ def Update_Grades_Instructor(id):
 """Route for View_Remark_Reqs"""
 @app.route('/View_Remark_Reqs')
 def View_Remark_Reqs():
-    pagename = 'View_Remark_Reqs'
+    pagename = 'Remark Requests'
     #new stuff
    
     remark_query_result = Remark.query.all()
@@ -251,7 +253,7 @@ def View_Remark_Reqs():
 
 @app.route('/Update_Remark/<int:id>', methods = ['GET', 'POST'])
 def Update_Remark(id):
-    pagename = 'Update_Remark'
+    pagename = 'Update Remark'
     Remark_to_update = Remark.query.get_or_404(id)
    
     if request.method == "POST":
@@ -276,7 +278,13 @@ def logout():
 
 @app.route('/calendar')
 def calendar():
-    return render_template('calendar.html')
+    pagename = 'Calendar'
+    return render_template('calendar.html', pagename = pagename)
+
+@app.route('/news')
+def news():
+    pagename = 'News'
+    return render_template('news.html', pagename = pagename)
 
 
 
