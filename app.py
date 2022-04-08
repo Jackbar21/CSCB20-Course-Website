@@ -269,7 +269,6 @@ def Update_Remark(id):
 def logout():
     session.pop('user', default = None)
     session.pop('user_type', default = None)
-    flash("You have been logged out successfully!", "info")
     return redirect(url_for('home'))
 
 
