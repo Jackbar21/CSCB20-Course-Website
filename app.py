@@ -320,12 +320,12 @@ def add_student(reg_details):
         username = reg_details[0],
         email = reg_details[1],
         password = reg_details[2],
-        assignment1 = -1,
-        assignment2 = -1,
-        assignment3 = -1,
-        tut_attendance = -1,
-        midterm = -1,
-        final = -1,
+        assignment1 = 0,
+        assignment2 = 0,
+        assignment3 = 0,
+        tut_attendance = 0,
+        midterm = 0,
+        final = 0,
         )
 
     db.session.add(student)
