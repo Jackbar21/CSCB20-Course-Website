@@ -177,7 +177,7 @@ def View_Anon_Feedback():
 
 @app.route('/View_Grades_Student', methods = ['GET', 'POST'])
 def View_Grades_Student():
-    pagename = 'View Grades'
+    pagename = 'Grades Summary'
     #new stuff
     query_Student_result = Student.query.order_by(Student.username)
     remark_query_result = Remark.query.all()
@@ -207,7 +207,7 @@ def View_Grades_Student():
 #New route for Grades as an Instructor
 @app.route('/View_Grades_Instructor')
 def View_Grades_Instructor():
-    pagename = 'View Student Grades'
+    pagename = 'View Grades'
     #new stuff
     query_Student_result = Student.query.order_by(Student.username)
     #new Stuff
@@ -305,16 +305,6 @@ def assignments():
 def tests():
     pagename = 'Tests'
     return render_template('tests.html', pagename = pagename)
-
-@app.route('/markus')
-def markus():
-    pagename = 'Markus'
-    return render_template('markus.html', pagename = pagename)
-
-@app.route('/discussion_board')
-def discussion_board():
-    pagename = 'Discussion Board'
-    return render_template('discussion_board.html', pagename = pagename)
 
 @app.route('/resources')
 def resources():
