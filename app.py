@@ -141,8 +141,15 @@ def login():
 
 
 """ adding app route for submitting Anon Feedback"""
-@app.route('/Send_Anon_Feedback',methods = ['GET', 'POST'])
+@app.route('/Send_Anon_Feedback', methods = ['GET', 'POST'])
 def Send_Anon_Feedback():
+    if "user" not in session:
+        flash("Please Login as a Student before accessing this page!", "error")
+        return redirect(url_for('login'))
+    elif session['user_type'] != "student":
+        flash("You must be a Student in order to access this page", "error")
+        return redirect(url_for('home'))
+    
     pagename = 'Send Anonymous Feedback'
     #new stuff
     query_Instructor = Instructor.query.all()
@@ -168,6 +175,13 @@ def Send_Anon_Feedback():
 """Adding app route for viewing Anon Feedback """
 @app.route('/View_Anon_Feedback')
 def View_Anon_Feedback():
+    if "user" not in session:
+        flash("Please Login as an Instructor before accessing this page!", "error")
+        return redirect(url_for('login'))
+    elif session['user_type'] != "instructor":
+        flash("You must be an Instructor in order to access this page", "error")
+        return redirect(url_for('home'))
+    
     pagename = 'View Anonymous Feedback'
     query_Feedback_result = Feedback.query.all()
     
@@ -177,6 +191,14 @@ def View_Anon_Feedback():
 
 @app.route('/View_Grades_Student', methods = ['GET', 'POST'])
 def View_Grades_Student():
+    if "user" not in session:
+        flash("Please Login as a Student before accessing this page!", "error")
+        return redirect(url_for('login'))
+    elif session['user_type'] != "student":
+        flash("You must be a Student in order to access this page", "error")
+        return redirect(url_for('home'))
+
+    print(session['user_type'])
     pagename = 'Grades Summary'
     #new stuff
     query_Student_result = Student.query.order_by(Student.username)
@@ -207,6 +229,13 @@ def View_Grades_Student():
 #New route for Grades as an Instructor
 @app.route('/View_Grades_Instructor')
 def View_Grades_Instructor():
+    if "user" not in session:
+        flash("Please Login as an Instructor before accessing this page!", "error")
+        return redirect(url_for('login'))
+    elif session['user_type'] != "instructor":
+        flash("You must be an Instructor in order to access this page", "error")
+        return redirect(url_for('home'))
+    
     pagename = 'View Grades'
     #new stuff
     query_Student_result = Student.query.order_by(Student.username)
@@ -218,6 +247,12 @@ def View_Grades_Instructor():
 
 @app.route('/Update_Grades_Instructor/<int:id>',methods = ['GET', 'POST'])
 def Update_Grades_Instructor(id):
+    if "user" not in session:
+        flash("Please Login as an Instructor before accessing this page!", "error")
+        return redirect(url_for('login'))
+    elif session['user_type'] != "instructor":
+        flash("You must be an Instructor in order to access this page", "error")
+        return redirect(url_for('home'))
 
     pagename = 'Update Grades'
     #new stuff
@@ -243,6 +278,13 @@ def Update_Grades_Instructor(id):
 """Route for View_Remark_Reqs"""
 @app.route('/View_Remark_Reqs')
 def View_Remark_Reqs():
+    if "user" not in session:
+        flash("Please Login as an Instructor before accessing this page!", "error")
+        return redirect(url_for('login'))
+    elif session['user_type'] != "instructor":
+        flash("You must be an Instructor in order to access this page", "error")
+        return redirect(url_for('home'))
+    
     pagename = 'Remark Requests'
     #new stuff
    
@@ -253,6 +295,13 @@ def View_Remark_Reqs():
 
 @app.route('/Update_Remark/<int:id>', methods = ['GET', 'POST'])
 def Update_Remark(id):
+    if "user" not in session:
+        flash("Please Login as an Instructor before accessing this page!", "error")
+        return redirect(url_for('login'))
+    elif session['user_type'] != "instructor":
+        flash("You must be an Instructor in order to access this page", "error")
+        return redirect(url_for('home'))
+    
     pagename = 'Update Remark'
     Remark_to_update = Remark.query.get_or_404(id)
    
@@ -278,36 +327,85 @@ def logout():
 
 @app.route('/calendar')
 def calendar():
+    if "user" not in session:
+        flash("Please Login as a Student before accessing this page!", "error")
+        return redirect(url_for('login'))
+    elif session['user_type'] != "student":
+        flash("You must be a Student in order to access this page", "error")
+        return redirect(url_for('home'))
+    
     pagename = 'Calendar'
     return render_template('calendar.html', pagename = pagename)
 
 @app.route('/news')
 def news():
+    if "user" not in session:
+        flash("Please Login as a Student before accessing this page!", "error")
+        return redirect(url_for('login'))
+    elif session['user_type'] != "student":
+        flash("You must be a Student in order to access this page", "error")
+        return redirect(url_for('home'))
+
     pagename = 'News'
     return render_template('news.html', pagename = pagename)
 
 @app.route('/lectures')
 def lectures():
+    if "user" not in session:
+        flash("Please Login as a Student before accessing this page!", "error")
+        return redirect(url_for('login'))
+    elif session['user_type'] != "student":
+        flash("You must be a Student in order to access this page", "error")
+        return redirect(url_for('home'))
+
     pagename = 'Lectures'
     return render_template('lectures.html', pagename = pagename)
 
 @app.route('/labs')
 def labs():
+    if "user" not in session:
+        flash("Please Login as a Student before accessing this page!", "error")
+        return redirect(url_for('login'))
+    elif session['user_type'] != "student":
+        flash("You must be a Student in order to access this page", "error")
+        return redirect(url_for('home'))
+
     pagename = 'Labs'
     return render_template('labs.html', pagename = pagename)
 
 @app.route('/assignments')
 def assignments():
+    if "user" not in session:
+        flash("Please Login as a Student before accessing this page!", "error")
+        return redirect(url_for('login'))
+    elif session['user_type'] != "student":
+        flash("You must be a Student in order to access this page", "error")
+        return redirect(url_for('home'))
+
     pagename = 'Assignments'
     return render_template('assignments.html', pagename = pagename)
 
 @app.route('/tests')
 def tests():
+    if "user" not in session:
+        flash("Please Login as a Student before accessing this page!", "error")
+        return redirect(url_for('login'))
+    elif session['user_type'] != "student":
+        flash("You must be a Student in order to access this page", "error")
+        return redirect(url_for('home'))
+
     pagename = 'Tests'
     return render_template('tests.html', pagename = pagename)
 
 @app.route('/resources')
 def resources():
+    if "user" not in session:
+        flash("Please Login as a Student before accessing this page!", "error")
+        return redirect(url_for('login'))
+    elif session['user_type'] != "student":
+        flash("You must be a Student in order to access this page", "error")
+        return redirect(url_for('home'))
+        
     pagename = 'Resources'
     return render_template('resources.html', pagename = pagename)
 
